@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="Cloudcv-vatsal">
+<head>
+	<meta charset="utf-8">
+	<link rel="stylesheet" href="/static/css/bootstrap-lumen.css">
+	
+	
+	<script src="/static/lib/angular/angular.js"></script>
+	<script src="/static/lib/angular-route/angular-route.js"></script>
+	<script src="/static/lib/angular-resource/angular-resource.js"></script>
+	<script src="/static/lib/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+	<script src="/static/js/app.js"></script>
+	<script type="text/javascript" src="/static/js/controller.js"></script>
+	<script type="text/javascript">
+		function getCookie(name)
+		{
+			var re = new RegExp(name + "=([^;]+)");
+			var value = re.exec(document.cookie);
+			return (value != null) ? unescape(value[1]) : null;
+		}
+
+	</script>
+</head>
+<body ng-controller="MainController">
+<div ng-hide="hide">
+	<div style="margin-bottom:25px;margin-top:-10px;background-color:#f7f7f7;" class="row">
+		<div class="col-md-3 text-primary"><h3 class="" style="margin-left:10px;margin-top:25px;">GSOC-15-CloudCV-Task</h3></div>
+
+		<div style="margin-top:25px;" class="col-md-1 btn-group" dropdown is-open="status.isopen">
+      <button type="button" class="btn btn-primary btn-xs dropdown-toggle" dropdown-toggle ng-disabled="disabled" ng-click="list_jobs()">
+        Select Previous Job <span class="caret"></span>
+      </button>
+      <ul class="dropdown-menu" role="menu">
+        <li ng-repeat="k in job_list"><a href="javascript:void(0);" ng-click="setjob(k)">{{k}}</a></li>
+      </ul>
+    </div>
+
+    <div class="col-md-1" style="margin-top:25px;margin-left:130px;"><a ng-click="viewcat()" class="btn btn-primary btn-xs pull-right" style="margin-right:30px;">View Added Categories</a></div>
+
+		<div class="col-md-4" style="margin-top:40px;">
+		<p class=" pull-right">Logged in as :&nbsp;&nbsp; <script type="text/javascript">document.write(getCookie("user").replace(/"/g, "").replace(/\\100/g, "@"));</script></p>
+		<p class=" pull-right" style="margin-top:-50px;">Current Job ID : {{jobID}}</p>
+		</div>
+		<div class="col-md-1" style="margin-top:25px;"><a ng-click="logout()" class="btn btn-primary btn-xs pull-right" style="margin-right:0px;">Logout</a></div>
+	</div>
+
+	<div class="form-group" style="float:clear;width:1000px;">
+      <label for="input1" class="col-md-2 control-label" style="margin-top:8px;">Image Category : </label>
+      <div class="col-md-4" style="margin-left:-60px;" >
+        <input type="text" class="form-control" id="input1" placeholder="Google image search" ng-model="search">
+      </div>
+    </div>
+
+    <div class="form-group" style="float:clear;width:1300px;margin-top:-12px;">
+      <label for="input2" class="col-md-2 control-label" style="margin-top:8px;margin-left:30px;">Test Image Url : </label>
+      <div class="col-md-6" style="margin-left:-120px;" >
+        <input type="text" class="form-control" id="input2" placeholder="Url">
+      </div>
+    </div>
+    </br>
+
+	<div style="margin-left:110px;margin-top:5px;margin-bottom:20px;" class="col-md-10" >
+		<a ng-click="file()" class="btn btn-success btn-sm">Add Category</a>
+		<a ng-click="" class="btn btn-success btn-sm">Train</a>
+		<a ng-click="" class="btn btn-success btn-sm" style="margin-left:295px;">Test</a>
+	</div>
+
+
+	<div ng-hide="added_category">
+	<div class="col-md-12" ng-show="images">
+ 		<h4 ><p class="col-md-4">{{display}}</p><p class="text-primary col-md-3">{{label}}</p></h4>
+ 	</div>
+	<div ng-repeat="link in parentobj.links" class="col-md-2" style="margin-bottom:10px;">
+	<div style="width:100px;height:100px;" >
+		<img ng-src="{{link}}" style="width:100px;height:100px" />
+	</div>
+	</div>
+	</div>
+
+	<div ng-repeat="(name,category) in catgry_all_imgs" ng-hide="hide_category">
+	<h4 class="col-md-12"><hr><p class="col-md-1">Category:</p><p class="text-primary">{{name}}</p></h4>
+	<div ng-repeat="link in category" class="col-md-2" style="margin-bottom:10px;">
+	<div style="width:100px;height:100px;" >
+		<img ng-src="{{link}}" style="width:100px;height:100px" />
+	</div>
+	</div>
+	</div>
+
+	
+	<div class="col-md-12" style="text-align:center;margin-top:70px;" ng-show="loading">
+          <img ng-src="http://cdnjs.cloudflare.com/ajax/libs/semantic-ui/0.16.1/images/loader-large.gif" alt="Loading..." >
+        </div>
+</div>
+<div ng-show="hide">
+
+</div>
+</body>
+</html>
